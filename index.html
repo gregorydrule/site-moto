@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MotoLoc</title>
+  <title>MotoLoc Pro</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
   <div class="container">
-    <h1>🏍️ MotoLoc</h1>
 
-    <input type="text" id="nom" placeholder="Ton nom"><br><br>
-    <input type="date" id="date"><br><br>
+    <h1>🏍️ MotoLoc Pro</h1>
 
-    <button onclick="reserver()">Réserver</button>
+    <!-- LOGIN -->
+    <div id="login">
+      <input type="text" id="username" placeholder="Nom utilisateur"><br><br>
+      <button onclick="login()">Se connecter</button>
+    </div>
 
-    <p id="message"></p>
+    <!-- APP -->
+    <div id="app" style="display:none;">
 
-    <h3>📋 Réservations</h3>
-    <ul id="liste"></ul>
+      <p id="welcome"></p>
+
+      <input type="date" id="date"><br><br>
+
+      <button onclick="reserver()">Réserver</button>
+      <button onclick="payer()">💳 Payer</button>
+
+      <p id="message"></p>
+
+      <h3>📋 Mes réservations</h3>
+      <ul id="liste"></ul>
+
+    </div>
+
   </div>
 
-  <!-- Carte -->
-  <div id="map"></div>
-
   <script src="script.js"></script>
-
-  <!-- Leaflet (carte GPS) -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 </body>
 </html>
