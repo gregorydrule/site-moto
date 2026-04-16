@@ -1,48 +1,69 @@
-// Charger les réservations
+let user = localStorage.getItem("user");
 let reservations = JSON.parse(localStorage.getItem("reservations")) || [];
 
-function afficherReservations() {
-  let liste = document.getElementById("liste");
-  liste.innerHTML = "";
+// LOGIN
+function login() {
+  let username = document.getElementById("username").value;
 
-  reservations.forEach(r => {
-    let li = document.createElement("li");
-    li.textContent = r.nom + " - " + r.date;
-    liste.appendChild(li);
-  });
-}
-
-function reserver() {
-  let nom = document.getElementById("nom").value;
-  let date = document.getElementById("date").value;
-
-  if (nom === "" || date === "") {
-    alert("Remplis tous les champs !");
+  if (username === "") {
+    alert("Entre un nom !");
     return;
   }
 
-  let reservation = { nom, date };
+  localStorage.setItem("user", username);
+  user = username;
+
+  document.getElementById("login").style.display = "none";
+  document.getElementById("app").style.display = "block";
+
+  document.getElementById("welcome").innerHTML = "👋 Bonjour " + user;
+
+  afficherReservations();
+}
+
+// RESERVER
+function reserver() {
+  let date = document.getElementById("date").value;
+
+  if (date === "") {
+    alert("Choisis une date !");
+    return;
+  }
+
+  let reservation = { user, date };
   reservations.push(reservation);
 
   localStorage.setItem("reservations", JSON.stringify(reservations));
 
   document.getElementById("message").innerHTML =
-    "✅ Réservation confirmée pour " + nom;
+    "✅ Réservé pour le " + date;
 
   afficherReservations();
 }
 
-// Initialisation
-afficherReservations();
+// PAIEMENT FAKE
+function payer() {
+  alert("💳 Paiement accepté !");
+}
 
+// AFFICHER
+function afficherReservations() {
+  let liste = document.getElementById("liste");
+  liste.innerHTML = "";
 
-// 📍 Carte GPS (Leaflet)
-let map = L.map('map').setView([48.8566, 2.3522], 13); // Paris
+  reservations
+    .filter(r => r.user === user)
+    .forEach(r => {
+      let li = document.createElement("li");
+      li.textContent = r.date;
+      liste.appendChild(li);
+    });
+}
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap'
-}).addTo(map);
-
-L.marker([48.8566, 2.3522]).addTo(map)
-  .bindPopup("Moto disponible ici 🏍️")
-  .openPopup();
+// AUTO LOGIN
+if (user) {
+  document.getElementById("login").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("welcome").innerHTML = "👋 Bonjour " + user;
+  afficherReservations();
+}
