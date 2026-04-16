@@ -1,21 +1,48 @@
-body {
-  font-family: Arial;
-  text-align: center;
-  background: #f4f4f4;
+// Charger les réservations
+let reservations = JSON.parse(localStorage.getItem("reservations")) || [];
+
+function afficherReservations() {
+  let liste = document.getElementById("liste");
+  liste.innerHTML = "";
+
+  reservations.forEach(r => {
+    let li = document.createElement("li");
+    li.textContent = r.nom + " - " + r.date;
+    liste.appendChild(li);
+  });
 }
 
-h1 {
-  color: orange;
-}
-input {
-  padding: 10px;
-  width: 200px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+function reserver() {
+  let nom = document.getElementById("nom").value;
+  let date = document.getElementById("date").value;
+
+  if (nom === "" || date === "") {
+    alert("Remplis tous les champs !");
+    return;
+  }
+
+  let reservation = { nom, date };
+  reservations.push(reservation);
+
+  localStorage.setItem("reservations", JSON.stringify(reservations));
+
+  document.getElementById("message").innerHTML =
+    "✅ Réservation confirmée pour " + nom;
+
+  afficherReservations();
 }
 
-#message {
-  margin-top: 20px;
-  color: green;
-  font-weight: bold;
-}
+// Initialisation
+afficherReservations();
+
+
+// 📍 Carte GPS (Leaflet)
+let map = L.map('map').setView([48.8566, 2.3522], 13); // Paris
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+}).addTo(map);
+
+L.marker([48.8566, 2.3522]).addTo(map)
+  .bindPopup("Moto disponible ici 🏍️")
+  .openPopup();
