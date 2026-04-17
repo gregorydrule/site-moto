@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 
-const stripe = require("stripe")("TA_CLE_SECRETE_ICI");
+const stripe = require("stripe")("pk_test_51TNAokRzGdWGudJ5k8nHvLp@vkTEsg
+Тjqj87UsyYJkNYHudEodxGjGPbdmMYbkdKmlwAR
+0hX3scCApnTbCx09ZNt00TYSryAGW");
 
 app.use(express.json());
 
