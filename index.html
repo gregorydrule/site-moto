@@ -68,3 +68,68 @@ async function book() {
 
 </body>
 </html>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+body {background:#111;color:white;font-family:Arial;text-align:center;}
+.container {max-width:400px;margin:auto;padding:20px;}
+input,select,button {width:100%;padding:15px;margin-top:10px;border-radius:10px;border:none;}
+button {background:#00c853;color:white;}
+.whatsapp {background:#25D366;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>TMAX 560 Réunion</h1>
+<p>110€/jour • Saint-Paul</p>
+
+<select id="moto">
+<option>TMAX 1</option>
+<option>TMAX 2</option>
+<option>TMAX 3</option>
+</select>
+
+<input type="email" id="email" placeholder="Email">
+<input type="date" id="start">
+<input type="date" id="end">
+
+<button onclick="book()">Réserver (50€)</button>
+
+<button class="whatsapp" onclick="wa()">WhatsApp</button>
+
+</div>
+
+<script>
+const stripe = Stripe("TA_CLE_PUBLIQUE");
+
+async function book() {
+  const moto = document.getElementById("moto").value;
+  const email = document.getElementById("email").value;
+  const start = document.getElementById("start").value;
+  const end = document.getElementById("end").value;
+
+  const res = await fetch("/checkout", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ moto, email, start, end })
+  });
+
+  const data = await res.json();
+
+  if(data.error){ alert(data.error); return; }
+
+  stripe.redirectToCheckout({ sessionId: data.id });
+}
+
+function wa(){
+  window.open("https://wa.me/262XXXXXXXXX");
+}
+</script>
+
+</body>
+</html>
