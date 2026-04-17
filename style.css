@@ -1,0 +1,50 @@
+body {
+  margin:0;
+  font-family: Arial;
+  background:#0f0f0f;
+  color:white;
+}
+
+.container {
+  max-width:400px;
+  margin:auto;
+  padding:20px;
+}
+
+h1 { text-align:center; }
+
+.card {
+  background:#1c1c1c;
+  padding:20px;
+  border-radius:15px;
+}
+
+input, select {
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:8px;
+  border:none;
+}
+
+button, a {
+  display:block;
+  text-align:center;
+  width:100%;
+  padding:15px;
+  margin-top:10px;
+  border-radius:10px;
+  text-decoration:none;
+  font-size:16px;
+}
+
+.btn-main { background:#00c853; color:white; }
+.btn-wa { background:#25D366; color:white; }
+.btn-call { background:#2196F3; color:white; }
+.btn-fb { background:#1877F2; color:white; }
+
+.price-box {
+  margin-top:10px;
+  font-size:18px;
+  text-align:center;
+}
