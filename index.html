@@ -168,3 +168,64 @@ function whatsapp(){
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<script src="https://js.stripe.com/v3/"></script>
+
+<style>
+body{background:#111;color:white;font-family:Arial;text-align:center;}
+.container{max-width:400px;margin:auto;padding:20px;}
+input,select,button{width:100%;padding:15px;margin-top:10px;border-radius:10px;border:none;}
+button{background:#00c853;color:white;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>TMAX Réunion</h1>
+
+<select id="moto">
+<option>TMAX 530</option>
+<option>TMAX 560 (1)</option>
+<option>TMAX 560 (2)</option>
+</select>
+
+<input type="email" id="email" placeholder="Email">
+<input type="date" id="start">
+<input type="date" id="end">
+
+<button onclick="book()">Payer acompte 50€</button>
+</div>
+
+<script>
+const stripe = Stripe("TA_CLE_PUBLIQUE");
+
+async function book(){
+  let moto = document.getElementById("moto").value;
+  let email = document.getElementById("email").value;
+  let start = document.getElementById("start").value;
+  let end = document.getElementById("end").value;
+
+  const res = await fetch("/checkout", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ moto, email, start, end })
+  });
+
+  const data = await res.json();
+
+  if(data.error){
+    alert(data.error);
+    return;
+  }
+
+  stripe.redirectToCheckout({ sessionId: data.id });
+}
+</script>
+
+</body>
+</html>
