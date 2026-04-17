@@ -14,17 +14,27 @@ body {
 }
 
 .container {
-  max-width:400px;
+  max-width:420px;
   margin:auto;
   padding:20px;
 }
 
-h1 { text-align:center; }
+h1 {
+  text-align:center;
+  margin-bottom:5px;
+}
+
+.subtitle {
+  text-align:center;
+  color:#aaa;
+  margin-bottom:20px;
+}
 
 .card {
   background:#1c1c1c;
   padding:20px;
   border-radius:15px;
+  box-shadow:0 0 20px rgba(0,0,0,0.5);
 }
 
 input, select {
@@ -33,28 +43,43 @@ input, select {
   margin-top:10px;
   border-radius:8px;
   border:none;
+  background:#2a2a2a;
+  color:white;
 }
 
-button, a {
-  display:block;
-  text-align:center;
+button {
   width:100%;
   padding:15px;
-  margin-top:10px;
+  margin-top:15px;
+  border:none;
   border-radius:10px;
-  text-decoration:none;
   font-size:16px;
+  font-weight:bold;
+  background:linear-gradient(45deg,#00c853,#00e676);
+  color:white;
+  cursor:pointer;
 }
 
-.btn-main { background:#00c853; color:white; }
-.btn-wa { background:#25D366; color:white; }
-.btn-call { background:#2196F3; color:white; }
-.btn-fb { background:#1877F2; color:white; }
+button:hover {
+  opacity:0.9;
+}
 
 .price-box {
-  margin-top:10px;
-  font-size:18px;
+  margin-top:15px;
   text-align:center;
+  font-size:18px;
+}
+
+.footer {
+  margin-top:20px;
+  text-align:center;
+}
+
+.footer a {
+  display:block;
+  margin-top:10px;
+  color:white;
+  text-decoration:none;
 }
 </style>
 </head>
@@ -64,14 +89,13 @@ button, a {
 <div class="container">
 
 <h1>TMAX Réunion</h1>
-<p style="text-align:center;">Saint-Paul • Location</p>
+<p class="subtitle">Location premium • Saint-Paul</p>
 
 <div class="card">
 
 <select id="moto">
 <option value="530">TMAX 530</option>
-<option value="560">TMAX 560 (1)</option>
-<option value="560">TMAX 560 (2)</option>
+<option value="560">TMAX 560</option>
 </select>
 
 <input type="email" id="email" placeholder="Votre email">
@@ -84,27 +108,22 @@ button, a {
 
 <div class="price-box" id="price">Prix : 0€</div>
 
-<button class="btn-main" onclick="payer()">
+<button onclick="reserve()">
 Payer acompte 50€
 </button>
 
-<a class="btn-wa" href="#" onclick="whatsapp()">WhatsApp</a>
+</div>
 
-<a class="btn-call" href="tel:+330620817434">
-📞 Appeler
-</a>
-
-<a class="btn-fb" href="https://www.facebook.com/Locationmoto974" target="_blank">
-Facebook LOC 974
-</a>
-
+<div class="footer">
+<a href="tel:+262XXXXXXXXX">📞 Appeler</a>
+<a href="https://wa.me/262XXXXXXXXX">💬 WhatsApp</a>
 </div>
 
 </div>
 
 <script>
 
-// 🔢 calcul prix
+// calcul prix
 function calculatePrice(days, moto, startDate) {
   let day = new Date(startDate).getDay();
   let price = 0;
@@ -145,9 +164,8 @@ document.getElementById("start").addEventListener("change", updatePrice);
 document.getElementById("end").addEventListener("change", updatePrice);
 document.getElementById("moto").addEventListener("change", updatePrice);
 
-
-// 💳 PAIEMENT SIMPLE STRIPE
-function payer(){
+// 🔥 RESERVATION
+function reserve(){
 
   let email = document.getElementById("email").value;
   let start = document.getElementById("start").value;
@@ -159,27 +177,17 @@ function payer(){
     return;
   }
 
-  // 🔥 REMPLACE ICI TON LIEN STRIPE
-  let stripeLink = "https://buy.stripe.com/test_00weVf2Tcdw95AU9jTdMI00";
+  // 🔥 TON LIEN STRIPE
+  let stripeLink = "COLLE_TON_LIEN_STRIPE_ICI";
 
-  // message WhatsApp
   let message = `Bonjour je veux réserver :
 Moto: ${moto}
 Du: ${start}
 Au: ${end}
 Email: ${email}`;
 
-  // ouvre paiement
   window.open(stripeLink, "_blank");
-
-  // ouvre WhatsApp
   window.open("https://wa.me/262XXXXXXXXX?text=" + encodeURIComponent(message));
-}
-
-
-// WhatsApp simple
-function whatsapp(){
-  window.open("https://wa.me/333620817434");
 }
 
 </script>
