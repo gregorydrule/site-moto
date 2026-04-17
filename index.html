@@ -19,9 +19,7 @@ body {
   padding:20px;
 }
 
-h1 {
-  text-align:center;
-}
+h1 { text-align:center; }
 
 .card {
   background:#1c1c1c;
@@ -37,18 +35,21 @@ input, select {
   border:none;
 }
 
-button {
+button, a {
+  display:block;
+  text-align:center;
   width:100%;
   padding:15px;
-  margin-top:15px;
-  border:none;
+  margin-top:10px;
   border-radius:10px;
+  text-decoration:none;
   font-size:16px;
-  cursor:pointer;
 }
 
 .btn-main { background:#00c853; color:white; }
 .btn-wa { background:#25D366; color:white; }
+.btn-call { background:#2196F3; color:white; }
+.btn-fb { background:#1877F2; color:white; }
 
 .price-box {
   margin-top:10px;
@@ -63,7 +64,7 @@ button {
 <div class="container">
 
 <h1>TMAX Réunion</h1>
-<p style="text-align:center;">Location • Saint-Paul</p>
+<p style="text-align:center;">Saint-Paul • Location</p>
 
 <div class="card">
 
@@ -84,12 +85,18 @@ button {
 <div class="price-box" id="price">Prix : 0€</div>
 
 <button class="btn-main" onclick="reserve()">
-Réserver (Acompte 50€)
+Payer acompte 50€
 </button>
 
-<button class="btn-wa" onclick="whatsapp()">
-WhatsApp
-</button>
+<a class="btn-wa" href="#" onclick="whatsapp()">WhatsApp</a>
+
+<a class="btn-call" href="tel:+330620817434">
+📞 Appeler
+</a>
+
+<a class="btn-fb" href="https://www.facebook.com/LOC974" target="_blank">
+Facebook LOC 974
+</a>
 
 </div>
 
@@ -97,30 +104,27 @@ WhatsApp
 
 <script>
 
-// calcul prix selon ton image
+// calcul prix
 function calculatePrice(days, moto, startDate) {
-
-  let day = new Date(startDate).getDay(); // 0 dimanche
-
-  let pricePerDay = 0;
+  let day = new Date(startDate).getDay();
+  let price = 0;
 
   if(moto == "530"){
-    if(day == 1) pricePerDay = 50;
-    else if(day >=2 && day <=4) pricePerDay = 60;
-    else pricePerDay = 90;
+    if(day == 1) price = 50;
+    else if(day >=2 && day <=4) price = 60;
+    else price = 90;
   }
 
   if(moto == "560"){
-    if(day == 1) pricePerDay = 60;
-    else if(day >=2 && day <=4) pricePerDay = 85;
-    else pricePerDay = 110;
+    if(day == 1) price = 60;
+    else if(day >=2 && day <=4) price = 85;
+    else price = 110;
   }
 
-  return pricePerDay * days;
+  return price * days;
 }
 
-// mise à jour prix
-function updatePrice() {
+function updatePrice(){
   let start = document.getElementById("start").value;
   let end = document.getElementById("end").value;
   let moto = document.getElementById("moto").value;
@@ -129,13 +133,11 @@ function updatePrice() {
 
   let d1 = new Date(start);
   let d2 = new Date(end);
-
-  let days = (d2 - d1) / (1000*60*60*24) + 1;
+  let days = (d2 - d1)/(1000*60*60*24)+1;
 
   if(days <= 0) return;
 
   let total = calculatePrice(days, moto, start);
-
   document.getElementById("price").innerText = "Prix : " + total + "€";
 }
 
@@ -143,88 +145,36 @@ document.getElementById("start").addEventListener("change", updatePrice);
 document.getElementById("end").addEventListener("change", updatePrice);
 document.getElementById("moto").addEventListener("change", updatePrice);
 
-// réservation simple
-function reserve() {
+// paiement + WhatsApp
+function reserve(){
 
   let email = document.getElementById("email").value;
   let start = document.getElementById("start").value;
   let end = document.getElementById("end").value;
+  let moto = document.getElementById("moto").value;
 
   if(!email || !start || !end){
     alert("Remplis tous les champs");
     return;
   }
 
-  alert("Réservation enregistrée ✅\nAcompte 50€ à payer");
+  let stripeLink = "https://buy.stripe.com/TON_LIEN_ICI";
 
+  let message = `Bonjour je veux réserver :
+Moto: ${moto}
+Du: ${start}
+Au: ${end}
+Email: ${email}`;
+
+  window.open(stripeLink, "_blank");
+  window.open("https://wa.me/262XXXXXXXXX?text=" + encodeURIComponent(message));
 }
 
-// WhatsApp direct
+// WhatsApp simple
 function whatsapp(){
-  window.open("https://wa.me/262XXXXXXXXX?text=Bonjour je veux réserver un TMAX");
+  window.open("https://wa.me/262XXXXXXXXX");
 }
 
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<script src="https://js.stripe.com/v3/"></script>
-
-<style>
-body{background:#111;color:white;font-family:Arial;text-align:center;}
-.container{max-width:400px;margin:auto;padding:20px;}
-input,select,button{width:100%;padding:15px;margin-top:10px;border-radius:10px;border:none;}
-button{background:#00c853;color:white;}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-<h1>TMAX Réunion</h1>
-
-<select id="moto">
-<option>TMAX 530</option>
-<option>TMAX 560 (1)</option>
-<option>TMAX 560 (2)</option>
-</select>
-
-<input type="email" id="email" placeholder="Email">
-<input type="date" id="start">
-<input type="date" id="end">
-
-<button onclick="book()">Payer acompte 50€</button>
-</div>
-
-<script>
-const stripe = Stripe("TA_CLE_PUBLIQUE");
-
-async function book(){
-  let moto = document.getElementById("moto").value;
-  let email = document.getElementById("email").value;
-  let start = document.getElementById("start").value;
-  let end = document.getElementById("end").value;
-
-  const res = await fetch("/checkout", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ moto, email, start, end })
-  });
-
-  const data = await res.json();
-
-  if(data.error){
-    alert(data.error);
-    return;
-  }
-
-  stripe.redirectToCheckout({ sessionId: data.id });
-}
 </script>
 
 </body>
