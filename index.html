@@ -58,25 +58,7 @@ button, a {
 }
 </style>
 </head>
-<button id="checkout-button">Payer 50€</button>
 
-<script src="https://js.stripe.com/v3/"></script>
-
-<script>
-const stripe = Stripe("pk_test_51TNAokRzGdWGudJ5k8nHvLp@vkTEsg
-Тjqj87UsyYJkNYHudEodxGjGPbdmMYbkdKmlwAR
-0hX3scCApnTbCx09ZNt00TYSryAGW");
-
-document.getElementById("checkout-button").addEventListener("click", async () => {
-  const res = await fetch("/create-checkout-session", {
-    method: "POST",
-  });
-
-  const data = await res.json();
-
-  stripe.redirectToCheckout({ sessionId: data.id });
-});
-</script>
 <body>
 
 <div class="container">
@@ -102,7 +84,7 @@ document.getElementById("checkout-button").addEventListener("click", async () =>
 
 <div class="price-box" id="price">Prix : 0€</div>
 
-<button class="btn-main" onclick="reserve()">
+<button class="btn-main" onclick="payer()">
 Payer acompte 50€
 </button>
 
@@ -112,7 +94,7 @@ Payer acompte 50€
 📞 Appeler
 </a>
 
-<a class="btn-fb" href="https://www.facebook.com/Locationmoto974?mibextid=wwXIfr" target="_blank">
+<a class="btn-fb" href="https://www.facebook.com/Locationmoto974" target="_blank">
 Facebook LOC 974
 </a>
 
@@ -122,7 +104,7 @@ Facebook LOC 974
 
 <script>
 
-// calcul prix
+// 🔢 calcul prix
 function calculatePrice(days, moto, startDate) {
   let day = new Date(startDate).getDay();
   let price = 0;
@@ -163,8 +145,9 @@ document.getElementById("start").addEventListener("change", updatePrice);
 document.getElementById("end").addEventListener("change", updatePrice);
 document.getElementById("moto").addEventListener("change", updatePrice);
 
-// paiement + WhatsApp
-function reserve(){
+
+// 💳 PAIEMENT SIMPLE STRIPE
+function payer(){
 
   let email = document.getElementById("email").value;
   let start = document.getElementById("start").value;
@@ -176,21 +159,27 @@ function reserve(){
     return;
   }
 
+  // 🔥 REMPLACE ICI TON LIEN STRIPE
   let stripeLink = "https://buy.stripe.com/TON_LIEN_ICI";
 
+  // message WhatsApp
   let message = `Bonjour je veux réserver :
 Moto: ${moto}
 Du: ${start}
 Au: ${end}
 Email: ${email}`;
 
+  // ouvre paiement
   window.open(stripeLink, "_blank");
+
+  // ouvre WhatsApp
   window.open("https://wa.me/262XXXXXXXXX?text=" + encodeURIComponent(message));
 }
 
+
 // WhatsApp simple
 function whatsapp(){
-  window.open("https://wa.me/262XXXXXXXXX");
+  window.open("https://wa.me/333620817434");
 }
 
 </script>
