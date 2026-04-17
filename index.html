@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Location TMAX Réunion</title>
+<title>TMAX Réunion</title>
 
 <style>
 body {
   margin:0;
   font-family: Arial;
-  background:#0f0f0f;
+  background:#0a0a0a;
   color:white;
 }
 
@@ -19,22 +19,23 @@ body {
   padding:20px;
 }
 
-h1 {
+.hero {
+  background:url("https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2") center/cover;
+  padding:60px 20px;
+  border-radius:15px;
   text-align:center;
-  margin-bottom:5px;
 }
 
-.subtitle {
-  text-align:center;
-  color:#aaa;
-  margin-bottom:20px;
+.hero h1 {
+  font-size:32px;
+  margin:0;
 }
 
 .card {
   background:#1c1c1c;
   padding:20px;
   border-radius:15px;
-  box-shadow:0 0 20px rgba(0,0,0,0.5);
+  margin-top:15px;
 }
 
 input, select {
@@ -43,43 +44,24 @@ input, select {
   margin-top:10px;
   border-radius:8px;
   border:none;
-  background:#2a2a2a;
-  color:white;
 }
 
 button {
   width:100%;
   padding:15px;
   margin-top:15px;
-  border:none;
   border-radius:10px;
   font-size:16px;
-  font-weight:bold;
-  background:linear-gradient(45deg,#00c853,#00e676);
-  color:white;
-  cursor:pointer;
+  border:none;
 }
 
-button:hover {
-  opacity:0.9;
-}
+.btn-main { background:#00c853; color:white; }
+.btn-total { background:#ff9800; color:white; }
 
 .price-box {
   margin-top:15px;
   text-align:center;
   font-size:18px;
-}
-
-.footer {
-  margin-top:20px;
-  text-align:center;
-}
-
-.footer a {
-  display:block;
-  margin-top:10px;
-  color:white;
-  text-decoration:none;
 }
 </style>
 </head>
@@ -88,8 +70,10 @@ button:hover {
 
 <div class="container">
 
-<h1>TMAX Réunion</h1>
-<p class="subtitle">Location premium • Saint-Paul</p>
+<div class="hero">
+<h1>🏍️ LOCATION TMAX</h1>
+<p>Tarifs imbattables 🔥</p>
+</div>
 
 <div class="card">
 
@@ -108,22 +92,15 @@ button:hover {
 
 <div class="price-box" id="price">Prix : 0€</div>
 
-<button onclick="reserve()">
-Payer acompte 50€
-</button>
+<button class="btn-main" onclick="payerAcompte()">Payer acompte 50€</button>
+<button class="btn-total" onclick="payerTotal()">Payer total</button>
 
-</div>
-
-<div class="footer">
-<a href="tel:+262XXXXXXXXX">📞 Appeler</a>
-<a href="https://wa.me/262XXXXXXXXX">💬 WhatsApp</a>
 </div>
 
 </div>
 
 <script>
 
-// calcul prix
 function calculatePrice(days, moto, startDate) {
   let day = new Date(startDate).getDay();
   let price = 0;
@@ -135,62 +112,4 @@ function calculatePrice(days, moto, startDate) {
   }
 
   if(moto == "560"){
-    if(day == 1) price = 60;
-    else if(day >=2 && day <=4) price = 85;
-    else price = 110;
-  }
-
-  return price * days;
-}
-
-function updatePrice(){
-  let start = document.getElementById("start").value;
-  let end = document.getElementById("end").value;
-  let moto = document.getElementById("moto").value;
-
-  if(!start || !end) return;
-
-  let d1 = new Date(start);
-  let d2 = new Date(end);
-  let days = (d2 - d1)/(1000*60*60*24)+1;
-
-  if(days <= 0) return;
-
-  let total = calculatePrice(days, moto, start);
-  document.getElementById("price").innerText = "Prix : " + total + "€";
-}
-
-document.getElementById("start").addEventListener("change", updatePrice);
-document.getElementById("end").addEventListener("change", updatePrice);
-document.getElementById("moto").addEventListener("change", updatePrice);
-
-// 🔥 RESERVATION
-function reserve(){
-
-  let email = document.getElementById("email").value;
-  let start = document.getElementById("start").value;
-  let end = document.getElementById("end").value;
-  let moto = document.getElementById("moto").value;
-
-  if(!email || !start || !end){
-    alert("Remplis tous les champs");
-    return;
-  }
-
-  // 🔥 TON LIEN STRIPE
-  let stripeLink = "https://buy.stripe.com/test_00weVf2Tcdw95AU9jTdMI00";
-
-  let message = `Bonjour je veux réserver :
-Moto: ${moto}
-Du: ${start}
-Au: ${end}
-Email: ${email}`;
-
-  window.open(stripeLink, "_blank");
-  window.open("https://wa.me/262XXXXXXXXX?text=" + encodeURIComponent(message));
-}
-
-</script>
-
-</body>
-</html>
+    if(day == 1) price
