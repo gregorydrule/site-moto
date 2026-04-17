@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 
-const stripe = require("stripe")("pk_test_51TNAokRzGdWGudJ5k8nHvLp@vkTEsg
-Тjqj87UsyYJkNYHudEodxGjGPbdmMYbkdKmlwAR
-0hX3scCApnTbCx09ZNt00TYSryAGW");
+const stripe = require("stripe")("sk_test_51TNAokRzGdWGudJ520ZAIJET4VZLgE
+1ХССEСRNmyBHtkvVМrYzIKЗwqТJqjbN666bWwaE
+bjFkJLlknmsKn8BMOfe00AdSb6rL2");
 
 app.use(express.json());
 
