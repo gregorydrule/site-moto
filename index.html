@@ -58,7 +58,25 @@ button, a {
 }
 </style>
 </head>
+<button id="checkout-button">Payer 50€</button>
 
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+const stripe = Stripe("pk_test_51TNAokRzGdWGudJ5k8nHvLp@vkTEsg
+Тjqj87UsyYJkNYHudEodxGjGPbdmMYbkdKmlwAR
+0hX3scCApnTbCx09ZNt00TYSryAGW");
+
+document.getElementById("checkout-button").addEventListener("click", async () => {
+  const res = await fetch("/create-checkout-session", {
+    method: "POST",
+  });
+
+  const data = await res.json();
+
+  stripe.redirectToCheckout({ sessionId: data.id });
+});
+</script>
 <body>
 
 <div class="container">
