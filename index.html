@@ -9,30 +9,48 @@
 body {
   margin:0;
   font-family: Arial, sans-serif;
-  background:#0f0f0f;
+  background:#0b0b0b;
   color:white;
 }
 
-/* HEADER */
-header {
+/* HERO */
+.hero {
+  background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('tmax1.jpg');
+  background-size:cover;
+  background-position:center;
+  height:90vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  padding:40px 20px;
-  background:black;
 }
 
-header h1 {
-  color:gold;
+.hero h1 {
   font-size:40px;
-  margin:0;
+  color:gold;
+}
+
+.hero p {
+  font-size:18px;
+}
+
+.btn {
+  background:gold;
+  color:black;
+  padding:15px 25px;
+  text-decoration:none;
+  border-radius:5px;
+  margin-top:15px;
+  font-weight:bold;
 }
 
 /* SECTION */
 .section {
-  padding:40px 20px;
+  padding:50px 20px;
   text-align:center;
 }
 
-/* CARDS */
 .container {
   display:flex;
   flex-wrap:wrap;
@@ -45,22 +63,30 @@ header h1 {
   padding:20px;
   border-radius:10px;
   width:280px;
-  box-shadow:0 0 10px rgba(255,215,0,0.2);
+}
+
+.card img {
+  width:100%;
+  border-radius:10px;
 }
 
 .card h3 {
   color:gold;
 }
 
-/* BUTTON */
-.btn {
-  display:inline-block;
+/* FORM */
+form input, form select {
+  width:80%;
+  padding:10px;
   margin:10px;
+  border-radius:5px;
+  border:none;
+}
+
+form button {
   background:gold;
-  color:black;
+  border:none;
   padding:12px 20px;
-  text-decoration:none;
-  border-radius:6px;
   font-weight:bold;
 }
 
@@ -74,25 +100,18 @@ header h1 {
   padding:15px;
   border-radius:50%;
   text-decoration:none;
-  font-size:20px;
-}
-
-/* FOOTER */
-footer {
-  background:black;
-  padding:20px;
-  text-align:center;
-  font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>LOC974 TMAX</h1>
-  <p>Location de TMAX à La Réunion</p>
-</header>
+<!-- HERO -->
+<div class="hero">
+  <h1>LOCATION TMAX</h1>
+  <p>Tarifs imbattables à La Réunion</p>
+  <a class="btn" href="https://wa.me/262620817424?text=Bonjour%20je%20veux%20réserver">Réserver maintenant</a>
+</div>
 
 <!-- MODELES -->
 <div class="section">
@@ -101,17 +120,15 @@ footer {
   <div class="container">
 
     <div class="card">
+      <img src="tmax1.jpg">
       <h3>TMAX 530</h3>
-      <p>Lundi : 50€</p>
-      <p>Mar-Jeu : 60€</p>
-      <p>Ven-Dim : 90€</p>
+      <p>50€ → 90€ / jour</p>
     </div>
 
     <div class="card">
+      <img src="tmax2.jpg">
       <h3>TMAX 560</h3>
-      <p>Lundi : 60€</p>
-      <p>Mar-Jeu : 85€</p>
-      <p>Ven-Dim : 110€</p>
+      <p>60€ → 110€ / jour</p>
     </div>
 
   </div>
@@ -119,34 +136,30 @@ footer {
 
 <!-- RESERVATION -->
 <div class="section">
-  <h2>Réserver maintenant</h2>
+  <h2>Réserver</h2>
 
+  <form action="https://formspree.io/f/TON_ID" method="POST">
+    <input type="text" name="nom" placeholder="Votre nom" required><br>
+    <input type="date" name="date" required><br>
+
+    <select name="modele">
+      <option>TMAX 530</option>
+      <option>TMAX 560</option>
+    </select><br>
+
+    <button type="submit">Envoyer</button>
+  </form>
+</div>
+
+<!-- CONTACT -->
+<div class="section">
+  <h2>Contact</h2>
   <a class="btn" href="tel:0620817424">📞 Appeler</a>
-
-  <a class="btn" href="https://wa.me/262620817424?text=Bonjour%20je%20souhaite%20réserver%20un%20TMAX">💬 WhatsApp</a>
+  <a class="btn" href="https://facebook.com/loc974/import">Facebook</a>
 </div>
 
-<!-- FACEBOOK -->
-<div class="section">
-  <h2>Suivez-nous</h2>
-
-  <a class="btn" href="https://facebook.com/loc974/import">Facebook LOC974</a>
-</div>
-
-<!-- INFOS -->
-<div class="section">
-  <h2>Infos location</h2>
-  <p>✔ Permis obligatoire</p>
-  <p>✔ Caution demandée</p>
-  <p>✔ Assurance incluse</p>
-</div>
-
-<!-- WHATSAPP FIXE -->
-<a class="whatsapp" href="https://wa.me/262620817424?text=Bonjour%20je%20veux%20louer%20un%20TMAX">💬</a>
-
-<footer>
-  © LOC974 TMAX - La Réunion
-</footer>
+<!-- WHATSAPP -->
+<a class="whatsapp" href="https://wa.me/262620817424">💬</a>
 
 </body>
 </html>
