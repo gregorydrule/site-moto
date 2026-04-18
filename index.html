@@ -14,7 +14,7 @@ body {
 }
 
 .hero {
-  background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1609630875171-b1321377ee65');
+  background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1619767886558-efdc259cde1a');
   background-size:cover;
   background-position:center;
   height:90vh;
@@ -26,6 +26,7 @@ body {
 }
 
 h1 { color:gold; }
+
 .btn {
   background:gold;
   color:black;
@@ -37,27 +38,50 @@ h1 { color:gold; }
 
 .section { padding:40px; text-align:center; }
 
+.container {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
 .card {
   background:#1a1a1a;
   margin:15px;
   padding:20px;
   border-radius:10px;
+  width:300px;
+}
+
+.card img {
+  width:100%;
+  border-radius:10px;
+}
+
+.tarifs {
+  background:#111;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  font-size:14px;
 }
 
 input, select {
-  padding:10px;
+  padding:12px;
   margin:10px;
-  width:80%;
+  width:85%;
+  border-radius:5px;
+  border:none;
 }
 
 button {
   padding:12px;
   background:gold;
   border:none;
+  font-weight:bold;
 }
 
 #total {
-  font-size:20px;
+  font-size:22px;
   color:gold;
   margin-top:15px;
 }
@@ -76,29 +100,43 @@ button {
 
 <body>
 
+<!-- HERO -->
 <div class="hero">
   <h1>LOCATION TMAX</h1>
   <p>La Réunion - Tarifs imbattables</p>
   <a class="btn" href="https://wa.me/262620817434">Réserver WhatsApp</a>
 </div>
 
+<!-- SCOOTERS -->
 <div class="section">
   <h2>Nos scooters</h2>
 
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc" width="100%">
-    <h3>TMAX 530</h3>
-    <p>50€ → 90€ / jour</p>
-  </div>
+  <div class="container">
 
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1591637333184-19aa84b3e01f" width="100%">
-    <h3>TMAX 560</h3>
-    <p>60€ → 110€ / jour</p>
-  </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1580310614729-ccd69652491d">
+      <h3>TMAX 530</h3>
+      <div class="tarifs">
+        Lundi : 50€<br>
+        Mar-Jeu : 60€<br>
+        Ven-Dim : 90€
+      </div>
+    </div>
 
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2">
+      <h3>TMAX 560</h3>
+      <div class="tarifs">
+        Lundi : 60€<br>
+        Mar-Jeu : 85€<br>
+        Ven-Dim : 110€
+      </div>
+    </div>
+
+  </div>
 </div>
 
+<!-- RESERVATION -->
 <div class="section">
   <h2>Simulation & Réservation</h2>
 
@@ -108,9 +146,11 @@ button {
 
     <input type="tel" name="telephone" placeholder="Téléphone" required><br>
 
-    <input type="date" id="date" name="date" required><br>
+    <label>Date début</label><br>
+    <input type="date" id="dateDebut" required><br>
 
-    <input type="number" id="jours" name="jours" placeholder="Nombre de jours" required><br>
+    <label>Date fin</label><br>
+    <input type="date" id="dateFin" required><br>
 
     <select id="modele" name="modele">
       <option value="530">TMAX 530</option>
@@ -124,6 +164,7 @@ button {
   </form>
 </div>
 
+<!-- CONTACT -->
 <div class="section">
   <h2>Contact</h2>
   <a class="btn" href="tel:0620817434">📞 0620817434</a>
@@ -134,36 +175,47 @@ button {
 
 <script>
 function calculerPrix() {
-  let jours = document.getElementById("jours").value;
+  let debut = new Date(document.getElementById("dateDebut").value);
+  let fin = new Date(document.getElementById("dateFin").value);
   let modele = document.getElementById("modele").value;
-  let date = new Date(document.getElementById("date").value);
-  
-  if(!jours || !date) return;
 
-  let jour = date.getDay(); // 0=dimanche
+  if(!debut || !fin) return;
 
-  let prix = 0;
+  let jours = Math.ceil((fin - debut) / (1000 * 60 * 60 * 24)) + 1;
 
-  if(modele == "530"){
-    if(jour == 1) prix = 50;
-    else if(jour >=2 && jour <=4) prix = 60;
-    else prix = 90;
+  if(jours <= 0) return;
+
+  let total = 0;
+
+  for(let i = 0; i < jours; i++){
+    let d = new Date(debut);
+    d.setDate(d.getDate() + i);
+    let jour = d.getDay();
+
+    let prix = 0;
+
+    if(modele == "530"){
+      if(jour == 1) prix = 50;
+      else if(jour >=2 && jour <=4) prix = 60;
+      else prix = 90;
+    }
+
+    if(modele == "560"){
+      if(jour == 1) prix = 60;
+      else if(jour >=2 && jour <=4) prix = 85;
+      else prix = 110;
+    }
+
+    total += prix;
   }
 
-  if(modele == "560"){
-    if(jour == 1) prix = 60;
-    else if(jour >=2 && jour <=4) prix = 85;
-    else prix = 110;
-  }
-
-  let total = prix * jours;
-
-  document.getElementById("total").innerHTML = "Total : " + total + "€";
+  document.getElementById("total").innerHTML =
+    "Durée : " + jours + " jours<br>Total : " + total + "€";
 }
 
-document.getElementById("jours").addEventListener("input", calculerPrix);
+document.getElementById("dateDebut").addEventListener("change", calculerPrix);
+document.getElementById("dateFin").addEventListener("change", calculerPrix);
 document.getElementById("modele").addEventListener("change", calculerPrix);
-document.getElementById("date").addEventListener("change", calculerPrix);
 </script>
 
 </body>
