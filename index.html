@@ -100,14 +100,12 @@ button {
 
 <body>
 
-<!-- HERO -->
 <div class="hero">
   <h1>LOCATION TMAX</h1>
   <p>La Réunion - Tarifs imbattables</p>
   <a class="btn" href="https://wa.me/262620817434">Réserver WhatsApp</a>
 </div>
 
-<!-- SCOOTERS -->
 <div class="section">
   <h2>Nos scooters</h2>
 
@@ -136,7 +134,6 @@ button {
   </div>
 </div>
 
-<!-- RESERVATION -->
 <div class="section">
   <h2>Simulation & Réservation</h2>
 
@@ -157,14 +154,21 @@ button {
       <option value="560">TMAX 560</option>
     </select><br>
 
-    <div id="total">Total : 0€</div>
+    <!-- AFFICHAGE PRIX -->
+    <div id="total">
+      Total : 0€<br>
+      Acompte : 40€<br>
+      Reste : 0€
+    </div>
+
+    <!-- ENVOI ACOMPTE -->
+    <input type="hidden" name="acompte" value="40€">
 
     <button type="submit">Réserver</button>
 
   </form>
 </div>
 
-<!-- CONTACT -->
 <div class="section">
   <h2>Contact</h2>
   <a class="btn" href="tel:0620817434">📞 0620817434</a>
@@ -208,8 +212,16 @@ function calculerPrix() {
     total += prix;
   }
 
+  let acompte = 40;
+  let reste = total - acompte;
+
+  if(reste < 0) reste = 0;
+
   document.getElementById("total").innerHTML =
-    "Durée : " + jours + " jours<br>Total : " + total + "€";
+    "Durée : " + jours + " jours<br>" +
+    "Total : " + total + "€<br>" +
+    "Acompte : 40€<br>" +
+    "Reste : " + reste + "€";
 }
 
 document.getElementById("dateDebut").addEventListener("change", calculerPrix);
