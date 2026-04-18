@@ -34,6 +34,7 @@ h1 { color:gold; }
   text-decoration:none;
   border-radius:5px;
   margin:10px;
+  display:inline-block;
 }
 
 .section { padding:40px; text-align:center; }
@@ -140,7 +141,6 @@ button {
   <form action="https://formspree.io/f/mqewbegd" method="POST">
 
     <input type="text" name="nom" placeholder="Nom" required><br>
-
     <input type="tel" name="telephone" placeholder="Téléphone" required><br>
 
     <label>Date début</label><br>
@@ -154,17 +154,22 @@ button {
       <option value="560">TMAX 560</option>
     </select><br>
 
-    <!-- AFFICHAGE PRIX -->
     <div id="total">
       Total : 0€<br>
       Acompte : 40€<br>
       Reste : 0€
     </div>
 
-    <!-- ENVOI ACOMPTE -->
     <input type="hidden" name="acompte" value="40€">
 
-    <button type="submit">Réserver</button>
+    <!-- BOUTONS -->
+    <button type="submit">📩 Demande de réservation</button>
+
+    <br>
+
+    <a class="btn" href="https://buy.stripe.com/test_7sYaEZbpIcs57J253DdMI01" target="_blank">
+      💳 Payer acompte 40€
+    </a>
 
   </form>
 </div>
@@ -214,7 +219,6 @@ function calculerPrix() {
 
   let acompte = 40;
   let reste = total - acompte;
-
   if(reste < 0) reste = 0;
 
   document.getElementById("total").innerHTML =
