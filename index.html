@@ -1,115 +1,70 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMAX Réunion</title>
-
-<style>
-body {
-  margin:0;
-  font-family: Arial;
-  background:#0a0a0a;
-  color:white;
-}
-
-.container {
-  max-width:420px;
-  margin:auto;
-  padding:20px;
-}
-
-.hero {
-  background:url("https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2") center/cover;
-  padding:60px 20px;
-  border-radius:15px;
-  text-align:center;
-}
-
-.hero h1 {
-  font-size:32px;
-  margin:0;
-}
-
-.card {
-  background:#1c1c1c;
-  padding:20px;
-  border-radius:15px;
-  margin-top:15px;
-}
-
-input, select {
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border-radius:8px;
-  border:none;
-}
-
-button {
-  width:100%;
-  padding:15px;
-  margin-top:15px;
-  border-radius:10px;
-  font-size:16px;
-  border:none;
-}
-
-.btn-main { background:#00c853; color:white; }
-.btn-total { background:#ff9800; color:white; }
-
-.price-box {
-  margin-top:15px;
-  text-align:center;
-  font-size:18px;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>LOC974 TMAX</title>
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #111;
+      color: white;
+    }
+    header {
+      background: black;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 { color: gold; }
+    .section {
+      padding: 40px;
+      text-align: center;
+    }
+    .btn {
+      background: gold;
+      color: black;
+      padding: 15px 25px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .card {
+      border: 1px solid #444;
+      margin: 20px;
+      padding: 20px;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="container">
+<header>
+  <h1>LOC974 TMAX</h1>
+  <p>Location de TMAX à La Réunion</p>
+</header>
 
-<div class="hero">
-<h1>🏍️ LOCATION TMAX</h1>
-<p>Tarifs imbattables 🔥</p>
+<div class="section">
+  <h2>Nos scooters</h2>
+
+  <div class="card">
+    <h3>TMAX 530</h3>
+    <p>À partir de 50€/jour</p>
+  </div>
+
+  <div class="card">
+    <h3>TMAX 560</h3>
+    <p>À partir de 60€/jour</p>
+  </div>
 </div>
 
-<div class="card">
-
-<select id="moto">
-<option value="530">TMAX 530</option>
-<option value="560">TMAX 560</option>
-</select>
-
-<input type="email" id="email" placeholder="Votre email">
-
-<label>Date début</label>
-<input type="date" id="start">
-
-<label>Date fin</label>
-<input type="date" id="end">
-
-<div class="price-box" id="price">Prix : 0€</div>
-
-<button class="btn-main" onclick="payerAcompte()">Payer acompte 50€</button>
-<button class="btn-total" onclick="payerTotal()">Payer total</button>
-
+<div class="section">
+  <h2>Réserver</h2>
+  <a class="btn" href="tel:0620817424">Appeler</a>
 </div>
 
+<div class="section">
+  <h2>Facebook</h2>
+  <a class="btn" href="https://facebook.com/loc974/import">Voir la page</a>
 </div>
 
-<script>
-
-function calculatePrice(days, moto, startDate) {
-  let day = new Date(startDate).getDay();
-  let price = 0;
-
-  if(moto == "530"){
-    if(day == 1) price = 50;
-    else if(day >=2 && day <=4) price = 60;
-    else price = 90;
-  }
-
-  if(moto == "560"){
-    if(day == 1) price
+</body>
+</html>
